@@ -13,8 +13,14 @@
         ws.send(JSON.stringify(messageBody));
     };
         
-    async function connectToServer() {    
-        const ws = new WebSocket('ws://localhost:7071/ws');
+    async function connectToServer() {
+        const host = window.location.host;
+        const port = 7071
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        // Construct the WebSocket URL using the host and protocol
+        console.log(host)
+        const wsUrl = `${protocol}//${window.location.hostname}:${port}/ws`;
+        const ws = new WebSocket(wsUrl);
         return new Promise((resolve, reject) => {
             const timer = setInterval(() => {
                 if(ws.readyState === 1) {
